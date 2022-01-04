@@ -37,3 +37,8 @@ To find items on sale:
 
 - Search for a product on Amazon Fresh
 - If the extension seen anything on sale, a menu will get added to the top of the page that starts with 'Sales found:'. Clicking on an item will scroll to the item and highlight the sale price.
+
+
+
+
+This extension works only at amazon.com

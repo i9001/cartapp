@@ -1,5 +1,5 @@
 /***********************************************************************
-  https://github.com/i9001
+  https://github.com/iiii7/cartapp
   -------------------------------- (Copyright 2022) ---------------------------------
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY
     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -14,7 +14,7 @@
     THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
     SUCH DAMAGE.
  ***********************************************************************/
- var l = {
+var l = {
     app_storage: {
         lists: [],
         state: "",

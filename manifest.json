@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Cart App",
-    "description": "",
-    "version": "0.1",
+    "name": "Amazon Fresh multiple carts",
+    "description": "Amazon Fresh multiple shopping carts Web Extension",
+    "version": "1.0",
     "icons": {
         "16": "icon.png"
     },
@@ -17,7 +17,7 @@
     "content_scripts": [
         {
             "matches": [
-                "<all_urls>"
+                "https://www.amazon.com/*"
             ],
             "js": [
                 "source/contentscript.js"
