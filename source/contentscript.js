@@ -293,3 +293,98 @@ if (e.length > 0) {
     });
     document.body.prepend(l);
 }
+chrome.runtime.onMessage.addListener(function(e, t, n) {
+    if (e.cmd == "getPageInfo") {
+        n({
+            fromcontent: {
+                url: location.toString(),
+                name: document.getElementById("productTitle") ? document.getElementById("productTitle").innerText : "",
+                price: document.getElementById("priceblock_ourprice") ? document.getElementById("priceblock_ourprice").innerText : "",
+                img: document.getElementById("landingImage") ? document.getElementById("landingImage").src : ""
+            }
+        });
+    }
+    if (e.cmd == "gotoUrl") {
+        n("ok");
+        if (location.href == e.theUrl) location.reload(); else location.assign(e.theUrl);
+    }
+    if (e.cmd == "clearCart") {
+        n("ok");
+        i();
+    }
+});
+
+function i() {
+    var e = document.querySelectorAll("input");
+    e.forEach(function(e) {
+        if (e.getAttribute("data-action") == "delete") {
+            e.click();
+        }
+    });
+    setTimeout(i, 800);
+}
+
+function o() {
+    chrome.storage.sync.get([ "app_storage" ], function(e) {
+        if (e.app_storage == undefined) return;
+        var n = JSON.parse(e.app_storage);
+        if (n.state == "adding") {
+            setTimeout(function() {
+                console.log(n);
+                var e = document.getElementsByClassName("a-button-input")[0];
+                e.click();
+                n.adding_item_index++;
+                chrome.storage.sync.set({
+                    app_storage: JSON.stringify(n)
+                });
+                console.log(n.adding_item_index + 1, n.lists[n.adding_list_id].list_items.length);
+                if (n.adding_item_index + 1 > n.lists[n.adding_list_id].list_items.length) {
+                    n.adding_item_index = 0;
+                    n.adding_list_id = 0;
+                    n.state = "";
+                    console.log("adding over", n);
+                    chrome.storage.sync.set({
+                        app_storage: JSON.stringify(n)
+                    });
+                } else {
+                    var t = n.lists[n.adding_list_id].list_items[n.adding_item_index].url;
+                    setTimeout(function() {
+                        if (location.href == t) o(); else location.assign(t);
+                    }, 800);
+                }
+            }, 800);
+        }
+    });
+}
+
+o();
+
+var e = document.querySelectorAll('[data-a-strike="true"]');
+
+if (e.length > 0) {
+    var l = document.createElement("div");
+    l.innerText = "Sales found: ";
+    l.style.background = "white";
+    l.style.position = "fixed";
+    l.style.zIndex = "400";
+    e.forEach(function(e) {
+        var t = e;
+        var n = document.createElement("a");
+        n.innerText = t.innerText;
+        n.style.border = "1px solid orange";
+        n.style.display = "inline-block";
+        n.style.verticalAlign = "middle";
+        n.style.margin = "3px";
+        n.style.padding = "1px";
+        n.onclick = function() {
+            t.scrollIntoView({
+                block: "center",
+                inline: "center"
+            });
+            t.style.background = "lightblue";
+            t.style.fontSize = "x-large";
+        };
+        l.appendChild(n);
+    });
+    document.body.prepend(l);
+}

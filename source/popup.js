@@ -52,11 +52,11 @@ function d(c) {
             c = 0;
             var e = document.createElement("p");
             e.innerText = i + ". " + t.name;
-            var a = document.createElement("a");
-            a.className = "btn";
-            a.innerText = "Edit List";
-            a.href = "#";
-            a.onclick = function() {
+            var n = document.createElement("a");
+            n.className = "btn";
+            n.innerText = "Edit List";
+            n.href = "#";
+            n.onclick = function() {
                 var e = prompt("List name", t.name);
                 if (e == null) return;
                 l.app_storage.lists[i].name = e;
@@ -64,28 +64,28 @@ function d(c) {
                     app_storage: JSON.stringify(l.app_storage)
                 }, d);
             };
-            e.appendChild(a);
-            var n = document.createElement("a");
-            n.className = "btn";
-            n.innerText = "Remove List";
-            n.href = "#";
-            n.onclick = function() {
+            e.appendChild(n);
+            var a = document.createElement("a");
+            a.className = "btn";
+            a.innerText = "Remove List";
+            a.href = "#";
+            a.onclick = function() {
                 l.app_storage.lists = g(l.app_storage.lists, i);
                 console.log(l.app_storage);
                 chrome.storage.sync.set({
                     app_storage: JSON.stringify(l.app_storage)
                 }, d);
             };
-            e.appendChild(n);
+            e.appendChild(a);
             p.appendChild(e);
             t.list_items.forEach(function(e, t) {
                 c += parseFloat(e.price.substr(1));
-                var a = document.createElement("div");
-                var n = document.createElement("img");
-                n.src = e.img;
-                n.width = 32;
-                n.style.verticalAlign = "middle";
-                a.appendChild(n);
+                var n = document.createElement("div");
+                var a = document.createElement("img");
+                a.src = e.img;
+                a.width = 32;
+                a.style.verticalAlign = "middle";
+                n.appendChild(a);
                 var r = document.createElement("a");
                 r.innerText = t + ". " + e.name + " " + e.price;
                 r.href = "#";
@@ -97,7 +97,7 @@ function d(c) {
                         focused: true
                     });
                 };
-                a.appendChild(r);
+                n.appendChild(r);
                 var o = document.createElement("a");
                 o.className = "btn";
                 o.innerText = "x";
@@ -110,8 +110,8 @@ function d(c) {
                         d();
                     });
                 };
-                a.appendChild(o);
-                p.appendChild(a);
+                n.appendChild(o);
+                p.appendChild(n);
             });
             var r = document.createElement("button");
             r.innerText = "Add to " + t.name;
@@ -194,12 +194,19 @@ document.getElementById("export").onclick = function() {
     });
 };
 
+document.getElementById("import").onclick = function() {
+    var e = JSON.parse(prompt("Enter data"));
+    chrome.storage.sync.set({
+        app_storage: JSON.stringify(e)
+    }, d);
+};
+
 d();
 
-function g(e, a) {
-    var n = [];
+function g(e, n) {
+    var a = [];
     e.forEach(function(e, t) {
-        if (t != a) n.push(e);
+        if (t != n) a.push(e);
     });
-    return n;
+    return a;
 }
