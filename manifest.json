@@ -3,6 +3,7 @@
     "name": "Amazon Fresh multiple carts",
     "description": "Amazon Fresh multiple shopping carts Web Extension",
     "version": "1.0",
+    "homepage_url": "https://github.com/iiii7/cartapp",
     "icons": {
         "16": "icon.png"
     },
