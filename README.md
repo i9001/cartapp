@@ -8,12 +8,12 @@ Right click on it and click Extract All...
 
 Click Extract
 
-In Edge browser:
+In Edge or Chrome browser:
 
 1. Navigate to edge://extensions/
 2. Enable Developer mode
 3. Click Load unpacked
-4. Navagate to where the extract is, i.e. cartapp-main\cartapp-main
+4. Navagate to where the extracted is, i.e. cartapp-main\cartapp-main
 5. Click Select
 
 
