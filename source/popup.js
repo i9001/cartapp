@@ -14,7 +14,7 @@
     THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
     SUCH DAMAGE.
  ***********************************************************************/
-var l = {
+var d = {
     app_storage: {
         lists: [],
         state: "",
@@ -24,7 +24,7 @@ var l = {
 };
 
 document.getElementById("clearData").onclick = function() {
-    chrome.storage.sync.clear();
+    chrome.storage.sync.clear(l);
 };
 
 document.getElementById("clearCart").onclick = function() {
@@ -40,52 +40,51 @@ document.getElementById("clearCart").onclick = function() {
     });
 };
 
-function d(c) {
+function l(c) {
     if (c === void 0) {
         c = 0;
     }
     var p = document.getElementById("lists");
     p.innerHTML = "";
     chrome.storage.sync.get([ "app_storage" ], function(e) {
-        if (e.app_storage) l.app_storage = JSON.parse(e.app_storage);
-        l.app_storage.lists.forEach(function(t, i) {
+        if (e.app_storage) d.app_storage = JSON.parse(e.app_storage);
+        d.app_storage.lists.forEach(function(t, o) {
             c = 0;
             var e = document.createElement("p");
-            e.innerText = i + ". " + t.name;
-            var n = document.createElement("a");
-            n.className = "btn";
-            n.innerText = "Edit List";
-            n.href = "#";
-            n.onclick = function() {
-                var e = prompt("List name", t.name);
-                if (e == null) return;
-                l.app_storage.lists[i].name = e;
-                chrome.storage.sync.set({
-                    app_storage: JSON.stringify(l.app_storage)
-                }, d);
-            };
-            e.appendChild(n);
+            e.innerText = o + ". " + t.name;
             var a = document.createElement("a");
             a.className = "btn";
-            a.innerText = "Remove List";
+            a.innerText = "Edit List";
             a.href = "#";
             a.onclick = function() {
-                l.app_storage.lists = g(l.app_storage.lists, i);
-                console.log(l.app_storage);
+                var e = prompt("List name", t.name);
+                if (e == null) return;
+                d.app_storage.lists[o].name = e;
                 chrome.storage.sync.set({
-                    app_storage: JSON.stringify(l.app_storage)
-                }, d);
+                    app_storage: JSON.stringify(d.app_storage)
+                }, l);
             };
             e.appendChild(a);
+            var n = document.createElement("a");
+            n.className = "btn";
+            n.innerText = "Remove List";
+            n.href = "#";
+            n.onclick = function() {
+                d.app_storage.lists = g(d.app_storage.lists, o);
+                chrome.storage.sync.set({
+                    app_storage: JSON.stringify(d.app_storage)
+                }, l);
+            };
+            e.appendChild(n);
             p.appendChild(e);
             t.list_items.forEach(function(e, t) {
                 c += parseFloat(e.price.substr(1));
-                var n = document.createElement("div");
-                var a = document.createElement("img");
-                a.src = e.img;
-                a.width = 32;
-                a.style.verticalAlign = "middle";
-                n.appendChild(a);
+                var a = document.createElement("div");
+                var n = document.createElement("img");
+                n.src = e.img;
+                n.height = 32;
+                n.style.verticalAlign = "middle";
+                a.appendChild(n);
                 var r = document.createElement("a");
                 r.innerText = t + ". " + e.name + " " + e.price;
                 r.href = "#";
@@ -97,21 +96,21 @@ function d(c) {
                         focused: true
                     });
                 };
-                n.appendChild(r);
-                var o = document.createElement("a");
-                o.className = "btn";
-                o.innerText = "x";
-                o.href = "#";
-                o.onclick = function() {
-                    l.app_storage.lists[i].list_items = g(l.app_storage.lists[i].list_items, t);
+                a.appendChild(r);
+                var i = document.createElement("a");
+                i.className = "btn";
+                i.innerText = "x";
+                i.href = "#";
+                i.onclick = function() {
+                    d.app_storage.lists[o].list_items = g(d.app_storage.lists[o].list_items, t);
                     chrome.storage.sync.set({
-                        app_storage: JSON.stringify(l.app_storage)
+                        app_storage: JSON.stringify(d.app_storage)
                     }, function() {
-                        d();
+                        l();
                     });
                 };
-                n.appendChild(o);
-                p.appendChild(n);
+                a.appendChild(i);
+                p.appendChild(a);
             });
             var r = document.createElement("button");
             r.innerText = "Add to " + t.name;
@@ -125,30 +124,28 @@ function d(c) {
                         tabId: e[0].id,
                         cmd: "getPageInfo"
                     }, function(e) {
-                        l.app_storage.lists[i].list_items.push(e.fromcontent);
+                        d.app_storage.lists[o].list_items.push(e.fromcontent);
                         chrome.storage.sync.set({
-                            app_storage: JSON.stringify(l.app_storage)
-                        }, d);
+                            app_storage: JSON.stringify(d.app_storage)
+                        }, l);
                     });
                 });
             };
             p.appendChild(r);
-            var o = document.createElement("button");
-            o.innerText = "Add all items to cart";
-            o.onclick = function() {
-                l.app_storage.state = "adding";
-                l.app_storage.adding_list_id = i;
-                l.app_storage.adding_item_index = 0;
-                var t = l.app_storage.lists[l.app_storage.adding_list_id].list_items[l.app_storage.adding_item_index].url;
-                console.log(1);
+            var i = document.createElement("button");
+            i.innerText = "Add all items to cart";
+            i.onclick = function() {
+                d.app_storage.state = "adding";
+                d.app_storage.adding_list_id = o;
+                d.app_storage.adding_item_index = 0;
+                var t = d.app_storage.lists[d.app_storage.adding_list_id].list_items[d.app_storage.adding_item_index].url;
                 chrome.storage.sync.set({
-                    app_storage: JSON.stringify(l.app_storage)
+                    app_storage: JSON.stringify(d.app_storage)
                 }, function() {
                     chrome.tabs.query({
                         active: true,
                         currentWindow: true
                     }, function(e) {
-                        console.log(2, t);
                         chrome.tabs.sendMessage(e[0].id, {
                             theUrl: t,
                             tabId: e[0].id,
@@ -157,9 +154,9 @@ function d(c) {
                     });
                 });
             };
-            p.appendChild(o);
+            p.appendChild(i);
             var s = document.createElement("span");
-            s.innerText = t.list_items.length + " items. total: " + c.toPrecision(2);
+            s.innerText = t.list_items.length + " items. total: " + c.toFixed(2);
             p.appendChild(s);
         });
     });
@@ -167,16 +164,16 @@ function d(c) {
 
 function e() {
     chrome.storage.sync.get([ "app_storage" ], function(e) {
-        if (e.app_storage) l.app_storage = JSON.parse(e.app_storage);
+        if (e.app_storage) d.app_storage = JSON.parse(e.app_storage);
         var t = prompt("List name", "List");
         if (t == null) return;
-        l.app_storage.lists.push({
+        d.app_storage.lists.push({
             name: t,
             list_items: []
         });
         chrome.storage.sync.set({
-            app_storage: JSON.stringify(l.app_storage)
-        }, d);
+            app_storage: JSON.stringify(d.app_storage)
+        }, l);
     });
 }
 
@@ -185,12 +182,16 @@ document.getElementById("createList").onclick = function() {
 };
 
 document.getElementById("reloadData").onclick = function() {
-    d();
+    l();
 };
 
 document.getElementById("export").onclick = function() {
     chrome.storage.sync.get([ "app_storage" ], function(e) {
-        if (e.app_storage) alert(e.app_storage);
+        if (e.app_storage) {
+            var t = JSON.stringify(JSON.parse(e.app_storage), null, 4);
+            navigator.clipboard.writeText(t);
+            alert("Copied to clipboard");
+        }
     });
 };
 
@@ -198,15 +199,15 @@ document.getElementById("import").onclick = function() {
     var e = JSON.parse(prompt("Enter data"));
     chrome.storage.sync.set({
         app_storage: JSON.stringify(e)
-    }, d);
+    }, l);
 };
 
-d();
+l();
 
-function g(e, n) {
-    var a = [];
+function g(e, a) {
+    var n = [];
     e.forEach(function(e, t) {
-        if (t != n) a.push(e);
+        if (t != a) n.push(e);
     });
-    return a;
+    return n;
 }
