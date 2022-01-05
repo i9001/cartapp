@@ -24,7 +24,7 @@ var d = {
 };
 
 document.getElementById("clearData").onclick = function() {
-    chrome.storage.sync.clear(l);
+    chrome.storage.sync.clear();
 };
 
 document.getElementById("clearCart").onclick = function() {
@@ -70,7 +70,7 @@ function l(c) {
             n.innerText = "Remove List";
             n.href = "#";
             n.onclick = function() {
-                d.app_storage.lists = g(d.app_storage.lists, o);
+                d.app_storage.lists = m(d.app_storage.lists, o);
                 chrome.storage.sync.set({
                     app_storage: JSON.stringify(d.app_storage)
                 }, l);
@@ -102,7 +102,7 @@ function l(c) {
                 i.innerText = "x";
                 i.href = "#";
                 i.onclick = function() {
-                    d.app_storage.lists[o].list_items = g(d.app_storage.lists[o].list_items, t);
+                    d.app_storage.lists[o].list_items = m(d.app_storage.lists[o].list_items, t);
                     chrome.storage.sync.set({
                         app_storage: JSON.stringify(d.app_storage)
                     }, function() {
@@ -189,9 +189,13 @@ document.getElementById("export").onclick = function() {
     chrome.storage.sync.get([ "app_storage" ], function(e) {
         if (e.app_storage) {
             var t = JSON.stringify(JSON.parse(e.app_storage), null, 4);
-            navigator.clipboard.writeText(t);
-            alert("Copied to clipboard");
+            setTimeout(function() {
+                navigator.clipboard.writeText(t);
+            }, 300);
         }
+        setTimeout(function() {
+            alert("Copied to clipboard");
+        }, 400);
     });
 };
 
@@ -204,7 +208,7 @@ document.getElementById("import").onclick = function() {
 
 l();
 
-function g(e, a) {
+function m(e, a) {
     var n = [];
     e.forEach(function(e, t) {
         if (t != a) n.push(e);
