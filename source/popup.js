@@ -58,7 +58,7 @@ function u(l) {
             a.innerText = "Edit";
             a.href = "#";
             a.onclick = function() {
-                var e = prompt("List name", t.name);
+                var e = prompt("Name", t.name);
                 if (e == null) return;
                 g.app_storage.lists[d].name = e;
                 chrome.storage.sync.set({
@@ -68,7 +68,7 @@ function u(l) {
             e.appendChild(a);
             var n = document.createElement("a");
             n.className = "btn";
-            n.innerText = "Delete";
+            n.innerText = "x";
             n.href = "#";
             n.onclick = function() {
                 g.app_storage.lists = _(g.app_storage.lists, d);

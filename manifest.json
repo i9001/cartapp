@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Amazon Fresh multiple carts",
-    "description": "Amazon Fresh multiple shopping carts Web Extension",
+    "description": "Amazon Fresh multiple shopping carts",
     "version": "1.1",
     "homepage_url": "https://github.com/iiii7/cartapp",
     "icons": {
