@@ -53,11 +53,11 @@ function u(l) {
             var e = document.createElement("div");
             e.innerText = d + ". " + t.name;
             e.className = "list_name_itm";
-            var n = document.createElement("a");
-            n.className = "btn";
-            n.innerText = "Edit List";
-            n.href = "#";
-            n.onclick = function() {
+            var a = document.createElement("a");
+            a.className = "btn";
+            a.innerText = "Edit";
+            a.href = "#";
+            a.onclick = function() {
                 var e = prompt("List name", t.name);
                 if (e == null) return;
                 g.app_storage.lists[d].name = e;
@@ -65,28 +65,28 @@ function u(l) {
                     app_storage: JSON.stringify(g.app_storage)
                 }, u);
             };
-            e.appendChild(n);
-            var a = document.createElement("a");
-            a.className = "btn";
-            a.innerText = "Remove List";
-            a.href = "#";
-            a.onclick = function() {
+            e.appendChild(a);
+            var n = document.createElement("a");
+            n.className = "btn";
+            n.innerText = "Delete";
+            n.href = "#";
+            n.onclick = function() {
                 g.app_storage.lists = _(g.app_storage.lists, d);
                 chrome.storage.sync.set({
                     app_storage: JSON.stringify(g.app_storage)
                 }, u);
             };
-            e.appendChild(a);
+            e.appendChild(n);
             m.appendChild(e);
             t.list_items.forEach(function(e, t) {
                 l += parseFloat(e.price.substr(1));
-                var n = document.createElement("tr");
-                var a = document.createElement("img");
-                a.src = e.img;
-                a.width = 32;
+                var a = document.createElement("tr");
+                var n = document.createElement("img");
+                n.src = e.img;
+                n.width = 32;
                 var r = document.createElement("td");
-                r.appendChild(a);
-                n.appendChild(r);
+                r.appendChild(n);
+                a.appendChild(r);
                 var i = document.createElement("td");
                 var o = document.createElement("span");
                 o.innerText = t + 1 + ". ";
@@ -119,8 +119,8 @@ function u(l) {
                     });
                 };
                 i.appendChild(p);
-                n.appendChild(i);
-                m.appendChild(n);
+                a.appendChild(i);
+                m.appendChild(a);
             });
             var r = document.createElement("button");
             r.innerText = "Add to " + t.name;
@@ -175,7 +175,7 @@ function u(l) {
 function e() {
     chrome.storage.sync.get([ "app_storage" ], function(e) {
         if (e.app_storage) g.app_storage = JSON.parse(e.app_storage);
-        var t = prompt("List name", "List");
+        var t = prompt("Cart name", "Cart");
         if (t == null) return;
         g.app_storage.lists.push({
             name: t,
@@ -218,10 +218,10 @@ document.getElementById("import").onclick = function() {
 
 u();
 
-function _(e, n) {
-    var a = [];
+function _(e, a) {
+    var n = [];
     e.forEach(function(e, t) {
-        if (t != n) a.push(e);
+        if (t != a) n.push(e);
     });
-    return a;
+    return n;
 }
