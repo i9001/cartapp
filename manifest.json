@@ -5,7 +5,8 @@
     "version": "1.0",
     "homepage_url": "https://github.com/iiii7/cartapp",
     "icons": {
-        "16": "icon.png"
+        "16": "icon.png",
+        "128": "icon.png"
     },
     "action": {
         "default_icon": "icon.png",

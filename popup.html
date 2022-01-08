@@ -2,23 +2,42 @@
 
 <head>
     <meta charset="utf-8" />
-    <style> 
-    .btn, button {
-        margin: 3px;
-        padding: 1px;
-    }
+    <style>
+        body {
+            background: rgb(248, 244, 179);  ;
+        }
+
+        .list_name_itm {
+            border-bottom: 2px solid rgb(90, 87, 49);
+        }
+
+        button {
+            font-size: smaller;
+        }
+
+        .list_name_itm,
+        .btn,
+        button,
+        td {
+            margin: 3px;
+            padding: 3px;
+        }
+
+        td {
+            vertical-align: middle;
+        }
     </style>
 </head>
 
-<body> 
-    <div style="width: 480px"> 
+<body>
+    <div style="width: 480px">
         <button id="reloadData">Reload data</button>
         <button id="clearData">Clear data</button>
         <button id="clearCart">Clear your cart</button>
         <button id="export">Export</button>
         <button id="import">Import</button>
         <button id="createList">Create list</button>
-        
+
         <div id="lists" style="width: 100%">
         </div>
     </div>
