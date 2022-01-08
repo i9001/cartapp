@@ -191,10 +191,6 @@ document.getElementById("createList").onclick = function() {
     e();
 };
 
-document.getElementById("reloadData").onclick = function() {
-    u();
-};
-
 document.getElementById("export").onclick = function() {
     chrome.storage.sync.get([ "app_storage" ], function(e) {
         if (e.app_storage) {
