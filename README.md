@@ -1,6 +1,6 @@
 To install this extension:
 
-Download extension: https://github.com/iiii7/cartapp/archive/refs/heads/main.zip
+Download extension: main.zip
 
 Go to where the download cartapp-main.zip is on your drive
 
